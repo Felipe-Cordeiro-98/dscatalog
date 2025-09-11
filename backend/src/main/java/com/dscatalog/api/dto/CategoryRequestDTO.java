@@ -1,4 +1,6 @@
 package com.dscatalog.api.dto;
 
-public record CategoryRequestDTO(String name) {
+import jakarta.validation.constraints.NotBlank;
+
+public record CategoryRequestDTO(@NotBlank String name) {
 }
