@@ -3,9 +3,11 @@ package com.dscatalog.api.service;
 import com.dscatalog.api.dto.CategoryRequestDTO;
 import com.dscatalog.api.dto.CategoryResponseDTO;
 import com.dscatalog.api.entity.Category;
+import com.dscatalog.api.exception.DatabaseException;
 import com.dscatalog.api.exception.ResourceNotFoundException;
 import com.dscatalog.api.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -48,6 +50,11 @@ public class CategoryService {
         if (!repository.existsById(id)) {
             throw new ResourceNotFoundException("Category not found");
         }
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+            repository.flush();
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Integrity violation: category is being used by another entity");
+        }
     }
 }
