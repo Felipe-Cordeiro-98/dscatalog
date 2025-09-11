@@ -3,8 +3,8 @@ package com.dscatalog.api.service;
 import com.dscatalog.api.dto.CategoryRequestDTO;
 import com.dscatalog.api.dto.CategoryResponseDTO;
 import com.dscatalog.api.entity.Category;
+import com.dscatalog.api.exception.ResourceNotFoundException;
 import com.dscatalog.api.repository.CategoryRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,34 +25,28 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public CategoryResponseDTO findById(Long id) {
         Category entity = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Entity not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
         return new CategoryResponseDTO(entity);
     }
 
     @Transactional
     public CategoryResponseDTO create(CategoryRequestDTO dto) {
         Category entity = new Category(null, dto.name());
-        entity = repository.save(entity);
-        return new CategoryResponseDTO(entity);
+        return new CategoryResponseDTO(repository.save(entity));
     }
 
     @Transactional
     public CategoryResponseDTO update(Long id, CategoryRequestDTO dto) {
-        try {
-            Category entity = repository.getReferenceById(id);
-            if (!entity.getName().equalsIgnoreCase(dto.name())) {
-                entity.setName(dto.name());
-            }
-            return new CategoryResponseDTO(entity);
-        } catch (EntityNotFoundException e) {
-            throw new EntityNotFoundException("Entity not found");
-        }
+        Category entity = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+        entity.setName(dto.name());
+        return new CategoryResponseDTO(entity);
     }
 
     @Transactional
     public void delete(Long id) {
         if (!repository.existsById(id)) {
-            throw new EntityNotFoundException("Entity not found");
+            throw new ResourceNotFoundException("Category not found");
         }
         repository.deleteById(id);
     }
