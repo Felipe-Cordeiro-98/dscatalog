@@ -3,6 +3,7 @@ package com.dscatalog.api.controller;
 import com.dscatalog.api.dto.ProductRequestDTO;
 import com.dscatalog.api.dto.ProductResponseDTO;
 import com.dscatalog.api.service.ProductService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import java.net.URI;
 @RestController
 @RequestMapping("/products")
 @RequiredArgsConstructor
+@Tag(name = "Product")
 public class ProductController {
 
     private final ProductService service;

@@ -3,6 +3,7 @@ package com.dscatalog.api.controller;
 import com.dscatalog.api.dto.CategoryRequestDTO;
 import com.dscatalog.api.dto.CategoryResponseDTO;
 import com.dscatalog.api.service.CategoryService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import java.net.URI;
 @RestController
 @RequestMapping("/categories")
 @RequiredArgsConstructor
+@Tag(name = "Category")
 public class CategoryController {
 
     private final CategoryService service;
