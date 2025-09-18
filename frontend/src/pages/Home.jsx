@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 export default function Home() {
+    const navigate = useNavigate();
+
     return (
         <div className="w-full h-full p-5 md:p-10 shadow-2xl rounded-2xl bg-white">
             <div className="w-full h-full flex flex-col lg:flex-row-reverse justify-evenly lg:items-center">
@@ -22,7 +26,9 @@ export default function Home() {
 
                     {/* button */}
                     <div className="w-full flex justify-center lg:justify-start">
-                        <button className="w-full md:w-[450px] h-[50px] text-white font-bold rounded-2xl bg-[#407BFF] cursor-pointer hover:opacity-85 transition-all duration-300">
+                        <button 
+                        className="w-full md:w-[450px] h-[50px] text-white font-bold rounded-2xl bg-[#407BFF] cursor-pointer hover:opacity-85 transition-all duration-300"
+                        onClick={() => navigate("/catalog")}>
                             INICIE AGORA A SUA BUSCA
                         </button>
                     </div>
