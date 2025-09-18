@@ -21,7 +21,7 @@ export default function Header() {
             </li>
             <li>
                 <NavLink
-                    to="/catalogo"
+                    to="/catalog"
                     className={({ isActive }) => `${linkStyle} ${isActive ? "font-bold text-white" : ""}`}
                     onClick={() => setMenuOpen(false)}
                 >
