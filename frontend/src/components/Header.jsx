@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useState } from "react";
 
 const linkStyle = "text-base text-[#FFFFFF80] hover:text-white transition-colors duration-200";
@@ -43,7 +43,9 @@ export default function Header() {
     return (
         <header className="w-full h-[60px] flex justify-between md:justify-center items-center px-6 bg-[#407BFF] relative">
             {/* Logo */}
-            <h1 className="text-white text-2xl font-bold absolute left-5">DS Catalog</h1>
+            <h1 className="text-white text-2xl font-bold absolute left-5">
+                <Link to="/">DS Catalog</Link>
+            </h1>
 
             {/* Menu Desktop */}
             <nav className="hidden md:block">
