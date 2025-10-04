@@ -41,7 +41,7 @@ export default function Header() {
     );
 
     return (
-        <header className="w-full h-[60px] flex justify-between md:justify-center items-center px-6 bg-[#407BFF] relative">
+        <header className="w-full h-[60px] flex justify-between md:justify-center items-center px-6 bg-[#407BFF] relative z-1000">
             {/* Logo */}
             <h1 className="text-white text-2xl font-bold absolute left-5">
                 <Link to="/">DS Catalog</Link>
