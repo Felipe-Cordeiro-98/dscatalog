@@ -2,8 +2,13 @@ import api from "./api";
 
 const API_URL = "/products";
 
-export const getProducts = async () => {
-    const response = await api.get(API_URL);
+export const getProducts = async ({ search = "", filterType = "product" } = {}) => {
+    const params = {};
+
+    if (filterType === "product" && search) params.name = search;
+    if (filterType === "category" && search) params.category = search;
+
+    const response = await api.get(API_URL, { params });
     return response.data;
 };
 
