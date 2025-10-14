@@ -1,23 +1,29 @@
 import { formatCurrency } from "../utils/formatCurrency";
 
-export default function ProductCard({ imgUrl, name, price }) {
-    const priceFormated = formatCurrency(price);
+export default function ProductCard({ name, price, imgUrl, onClick }) {
+    const formatted = formatCurrency(price);
+    const [currencySymbol, value] = formatted.split(/\s+/);
+    const [integer, decimal] = value.split(",");
+
     return (
-        <div className="h-[300px] flex flex-col items-center rounded-2xl shadow bg-white overflow-hidden">
-            <div className="h-[180px] w-full flex items-center justify-center p-3 border-b-2 border-[#F2F2F2]">
-                <img className="max-h-full max-w-full object-contain" src={imgUrl} alt={name} />
+        <div
+            className="w-full h-[260px] bg-white rounded-[10px] shadow-[0px_0px_6px_#ccc] transition-transform duration-300 hover:scale-[103%] cursor-pointer"
+            onClick={onClick}
+        >
+            <div className="w-full h-[170px] p-3 border-b border-[#E1E1E1]">
+                <img className="w-full h-full object-contain" src={imgUrl} alt={name} />
             </div>
-            <div className="w-full h-[120px] flex flex-col justify-evenly p-3">
-                <h3 className="text-[18px] text-center font-bold line-clamp-2">{name}</h3>
-                <p className="flex justify-center text-gray-600">
-                    <span className="text-base text-[#9E9E9E]">R$</span>
-                    <span className="text-4xl font-bold text-blue-500 leading-none">
-                        {priceFormated.replace("R$", "").split(",")[0]}
-                    </span>
-                    <span className="self-end mb-1 text-lg font-bold text-blue-500 leading-none">
-                        ,{priceFormated.replace("R$", "").split(",")[1]}
-                    </span>
-                </p>
+            <div className="w-full h-[90px] flex flex-col justify-between py-4">
+                <div className="text-center">
+                    <h3 className="text-base text-[#263238] font-bold">{name}</h3>
+                </div>
+                <div className="flex justify-center items-start">
+                    <sup className="text-base text-[#9E9E9E] mr-1 mt-1">{currencySymbol}</sup>
+                    <p className="text-[24px] text-[#407BFF] font-bold leading-none">
+                        {integer}
+                        <span className="text-base">{"," + decimal}</span>
+                    </p>
+                </div>
             </div>
         </div>
     );
