@@ -1,5 +1,5 @@
 import HomeIllustration from "../assets/home-illustration.svg";
-import Button from "../components/Button";
+import ArrowButton from "../components/ArrowButton";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
@@ -27,7 +27,7 @@ export default function Home() {
                 </div>
 
                 <div className="w-full flex justify-center lg:mb-5">
-                    <Button text="INICIE AGORA A SUA BUSCA" onClick={() => navigate("/catalog")} />
+                    <ArrowButton text="INICIE AGORA A SUA BUSCA" onClick={() => navigate("/catalog")} />
                 </div>
             </div>
         </div>
