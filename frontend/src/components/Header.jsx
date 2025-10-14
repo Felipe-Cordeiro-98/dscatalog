@@ -54,7 +54,7 @@ export default function Header() {
 
             {/* Button Hamburguer Mobile */}
             <button
-                className="md:hidden flex flex-col justify-between w-6 h-5 absolute right-5 focus:outline-none z-20"
+                className="md:hidden flex flex-col justify-between w-6 h-5 absolute right-5 focus:outline-none z-20 cursor-pointer"
                 onClick={toggleMenu}
             >
                 <span
