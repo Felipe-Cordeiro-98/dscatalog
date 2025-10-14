@@ -23,10 +23,10 @@ export default function Catalog() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const params = debouncedSearch.trim().length > 0
-                ? { search: debouncedSearch, filterType }
+                const params = debouncedSearch.trim().length > 1 
+                ? { search: debouncedSearch, filterType } 
                 : {};
-                
+
                 const response = await getProducts(params);
                 setProducts(response.content ?? []);
             } catch (err) {
@@ -44,57 +44,70 @@ export default function Catalog() {
     };
 
     return (
-        <div className="">
-            <div className="lg:flex lg:items-center">
-                {/* page title */}
-                <div className="mb-4 md:mr-5 lg:mb-0">
-                    <h3 className="text-[#263238] text-[18px] md:text-2xl text-nowrap font-bold">
+        <div className="w-full h-full">
+            <div className="mb-5 md:mb-10 lg:flex lg:items-center">
+                {/* title */}
+                <div className="mb-4">
+                    <h1 className="lg:mr-10 text-[18px] md:text-2xl lg:text-nowrap text-[#263238] font-bold">
                         Catálogo de produtos
-                    </h3>
+                    </h1>
                 </div>
-                {/* search with filters */}
-                <div className="w-full md:flex md:items-center p-4 lg:p-0 lg:px-4 lg:py-2 bg-white rounded-xl shadow">
-                    {/* input */}
-                    <div className="md:w-1/2 mb-5 md:m-0 relative">
+
+                {/* filters */}
+                <div className="w-full md:flex pt-4 pb-6 px-4 md:py-[10px] bg-white rounded-[10px] shadow">
+                    <div className="w-full mb-5 md:mb-0 md:mr-5 relative">
                         <input
-                            className="w-full h-10 pl-1 pr-9 border-b border-[#E1E1E1] placeholder:text-[#9E9E9E] focus:outline-none"
-                            type="text"
-                            placeholder={filterType === "product" ? "Pesquisar Produto" : "Pesquisar Categoria"}
-                            value={search}
+                            className="w-full h-10 pr-10 border-b border-[#E1E1E1] placeholder:text-[#9E9E9E] focus:outline-none"
+                            placeholder={`Pesquisar ${filterType === "product" ? "produto" : "categoria"}`}
                             onChange={(e) => setSearch(e.target.value)}
+                            value={search}
+                            type="text"
                         />
-                        <img className="absolute top-0 right-0" src={searchIcon} alt="Search" />
+                        <img className="absolute top-0 right-0" src={searchIcon} alt="Pesquisa" />
                     </div>
-                    {/* select and button */}
-                    <div className="md:w-1/2 flex justify-between md:ml-10">
-                        <select
-                            className="md:w-full h-10 md:mr-5 text-[#9E9E9E] border-b border-[#E1E1E1] focus:outline-none"
-                            value={filterType}
-                            onChange={(e) => setFilterType(e.target.value)}
-                        >
-                            <option value="product">Filtrar por Produto</option>
-                            <option value="category">Filtrar por Categoria</option>
-                        </select>
-                        <button
-                            className="h-10 text-[#9E9E9E] text-[12px] text-nowrap font-bold px-4 border border-[#E1E1E1] rounded-xl cursor-pointer transition-transform duration-150 active:scale-95"
-                            onClick={clearFilters}
-                            type="button"
-                        >
-                            LIMPAR FILTRO
-                        </button>
+
+                    <div className="flex justify-between items-center">
+                        <div className="w-full mr-4">
+                            <select
+                                className="w-full md:min-w-[200px] h-10 text-[#9E9E9E] border-b border-[#E1E1E1] focus:outline-none"
+                                value={filterType}
+                                onChange={(e) => setFilterType(e.target.value)}
+                            >
+                                <option value="product">Filtrar por Produto</option>
+                                <option value="category">Filtrar por Categoria</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button
+                                className="
+                                    w-[110px] md:w-[180px] h-10 
+                                    text-[12px] md:text-base text-[#9E9E9E] font-bold 
+                                    border border-[#E1E1E1] 
+                                    rounded-[10px] 
+                                    cursor-pointer hover:shadow-[0px_0px_2px_#407BFF] 
+                                    transition-transform duration-200 active:scale-[0.98]
+                                "
+                                onClick={clearFilters}
+                                type="button"
+                            >
+                                LIMPAR FILTRO
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-            {/* products */}
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+
+            {/* catalog */}
+            <div className="w-full grid grid-cols-1 gap-5 md:grid-cols-3 lg:grid-cols-4">
                 {products.map((prod) => (
-                    <div
+                    <ProductCard
                         key={prod.id}
-                        className="shadow-[0px_0px_8px_rgba(0,0,0,0.1)] rounded-2xl cursor-pointer transition-transform duration-300 delay-75 hover:scale-105 "
+                        id={prod.id}
+                        name={prod.name}
+                        price={prod.price}
+                        imgUrl={prod.imgUrl}
                         onClick={() => navigate(`/catalog/${prod.id}`)}
-                    >
-                        <ProductCard name={prod.name} price={prod.price} imgUrl={prod.imgUrl} />
-                    </div>
+                    />
                 ))}
             </div>
         </div>
